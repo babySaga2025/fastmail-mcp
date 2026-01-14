@@ -122,6 +122,7 @@ PYTHONPATH=src python3 src/fastmail_mcp/server.py --help
 2. **Coverage Below Threshold**: Add tests or mark untestable code with `# pragma: no cover`
 3. **Formatting Failures**: Run `black src tests` to fix formatting
 4. **Linting Errors**: Run `ruff check src tests` and fix reported issues
+5. **YAML Syntax Errors**: Validate workflow file with `python3 -c "import yaml; yaml.safe_load(open('.github/workflows/ci.yml'))"`
 
 ### Debug Information
 The CI includes extensive debug output:

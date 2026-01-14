@@ -7,9 +7,7 @@ on:
 jobs:
   build-and-test:
     name: Build, test, and enforce coverage
-    # IMPORTANT: labels here must match what you used when you ran ./config.sh
-    # Example: --labels mac-mini,python,fastmail-mcp
-    runs-on: [self-hosted, macos, mac-mini]
+    runs-on: self-hosted
 
     strategy:
       max-parallel: 1
@@ -129,12 +127,10 @@ jobs:
           else
             echo "WARNING: FASTMAIL_CREDENTIALS_BASE64 is not set and no .env.example fallback is available."
             echo "Creating minimal .env file for testing..."
-            cat > .env << 'EOF'
-FASTMAIL_BASE_URL=https://api.fastmail.com
-FASTMAIL_USERNAME=test-user
-FASTMAIL_APP_PASSWORD=test-password
-FASTMAIL_TOKEN=test-token
-EOF
+            echo "FASTMAIL_BASE_URL=https://api.fastmail.com" > .env
+            echo "FASTMAIL_USERNAME=test-user" >> .env
+            echo "FASTMAIL_APP_PASSWORD=test-password" >> .env
+            echo "FASTMAIL_TOKEN=test-token" >> .env
           fi
 
       - name: Verify build and imports
