@@ -10,6 +10,7 @@ import os
 import socketserver
 import sys
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any, Callable, Dict, IO, Mapping
 
 from fastmail_mcp.client import FastmailClient
@@ -145,7 +146,11 @@ def serve_tcp(dispatcher: FastmailMCPServer, host: str, port: int) -> None:
 
 
 def build_client() -> FastmailClient:
-    load_env()
+    # Load .env from the project root directory, not the current working directory
+    project_root = Path(__file__).parent.parent.parent
+    env_file = project_root / ".env"
+    load_env(env_file if env_file.exists() else None)
+
     base_url = os.environ.get("FASTMAIL_BASE_URL", "https://api.fastmail.com")
     username = os.environ.get("FASTMAIL_USERNAME", "local-user")
     app_password = os.environ.get("FASTMAIL_APP_PASSWORD", "local-app-password")
@@ -196,4 +201,8 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    # Use the new MCP-compliant server instead
+    import asyncio
+    from fastmail_mcp.mcp_server import main as mcp_main
+
+    asyncio.run(mcp_main())
