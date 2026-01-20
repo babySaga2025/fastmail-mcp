@@ -47,6 +47,9 @@ class FastmailClient:
     def list_recent_messages(self, *, limit: int = 10) -> List[Message]:
         """Return recent messages, preferring live JMAP data and falling back to fixtures."""
 
+        # Ensure limit is an integer for slicing
+        limit = int(limit)
+
         messages: Sequence[Message]
         try:
             live_payload = self._transport.list_messages(limit=limit)
@@ -64,6 +67,9 @@ class FastmailClient:
         return list(messages[:limit])
 
     def list_recent_contacts(self, *, limit: int = 10) -> List[Contact]:
+        # Ensure limit is an integer for slicing
+        limit = int(limit)
+
         contacts: Sequence[Contact]
         try:
             live_payload = self._transport.list_contacts(limit=limit)
@@ -81,6 +87,9 @@ class FastmailClient:
         return list(contacts[:limit])
 
     def list_upcoming_events(self, *, limit: int = 10) -> List[CalendarEvent]:
+        # Ensure limit is an integer for slicing
+        limit = int(limit)
+
         events: Sequence[CalendarEvent]
         try:
             live_payload = self._transport.list_events(limit=limit)
