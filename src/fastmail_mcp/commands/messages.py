@@ -8,6 +8,7 @@ from functools import partial
 from typing import Any, Dict, List, Optional, TYPE_CHECKING
 
 from fastmail_mcp.client import FastmailClient
+from fastmail_mcp.utils import format_local
 
 if TYPE_CHECKING:
     from fastmail_mcp.server import FastmailMCPServer

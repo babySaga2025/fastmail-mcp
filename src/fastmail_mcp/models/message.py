@@ -6,6 +6,8 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Dict
 
+from fastmail_mcp.utils import format_local
+
 
 @dataclass()
 class Message:
@@ -34,5 +36,5 @@ class Message:
             "id": self.id,
             "subject": self.subject,
             "snippet": self.snippet,
-            "received_at": self.received_at.isoformat(),
+            "received_at": format_local(self.received_at),
         }

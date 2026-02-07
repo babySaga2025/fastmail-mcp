@@ -24,6 +24,11 @@ MCP server for managing Fastmail email via JMAP API. Cloned from doronkatz/Fastm
 3. Wire into `call_tool()` in `mcp_server.py`
 4. For write operations, gate behind `FASTMAIL_ENABLE_WRITE_TOOLS=true`
 
+## Conventions
+- All timestamps displayed in Central Time (America/Chicago) via `utils.format_local()`
+- DST handled automatically by stdlib `zoneinfo` — CST in winter, CDT in summer
+- Use `format_local()` for any new timestamp output; never hardcode UTC offsets
+
 ## What Works
 - Mail read operations: list, search, get message details
 - Token-based auth (bearer token via FASTMAIL_TOKEN)

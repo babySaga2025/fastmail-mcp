@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
+from fastmail_mcp.utils import format_local
 from .base import PaginationRequest, PaginationResponse
 
 
@@ -168,7 +169,7 @@ class MessageSummary:
             "subject": self.subject,
             "sender": self.sender,
             "snippet": self.snippet,
-            "received_at": self.received_at.isoformat(),
+            "received_at": format_local(self.received_at),
             "read": self.read,
             "has_attachment": self.has_attachment,
             "mailbox": self.mailbox,
@@ -206,9 +207,9 @@ class MessageDetail:
         if self.bcc:
             result["bcc"] = self.bcc
         if self.received_at:
-            result["received_at"] = self.received_at.isoformat()
+            result["received_at"] = format_local(self.received_at)
         if self.sent_at:
-            result["sent_at"] = self.sent_at.isoformat()
+            result["sent_at"] = format_local(self.sent_at)
         if self.body_text:
             result["body_text"] = self.body_text
         if self.body_html:

@@ -3,8 +3,27 @@
 from __future__ import annotations
 
 import os
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict
+from zoneinfo import ZoneInfo
+
+# Automatically handles CST (UTC-6) and CDT (UTC-5) transitions
+DISPLAY_TZ = ZoneInfo("America/Chicago")
+
+
+def to_local(dt: datetime) -> datetime:
+    """Convert a datetime to the display timezone."""
+    if dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt.astimezone(DISPLAY_TZ)
+
+
+def format_local(dt: datetime) -> str:
+    """Format a datetime as a human-readable string in the display timezone."""
+    local = to_local(dt)
+    # %Z gives "CST" or "CDT" automatically
+    return local.strftime("%Y-%m-%d %I:%M %p %Z")
 
 _ENV_COMMENT_PREFIXES = ("#", "//")
 
