@@ -29,10 +29,20 @@ MCP server for managing Fastmail email via JMAP API. Cloned from doronkatz/Fastm
 - DST handled automatically by stdlib `zoneinfo` — CST in winter, CDT in summer
 - Use `format_local()` for any new timestamp output; never hardcode UTC offsets
 
+## MCP Tools (registered in mcp_server.py)
+- `messages-list` — List recent emails. Params: `limit` (int), `mailbox_name` (str), `has_attachment` (bool)
+- `messages-search` — Search with filters. Params: `sender`, `subject`, `mailbox`, `read`, `has_attachment`, `date_start`/`date_end` (YYYY-MM-DD), `limit`, `offset`, `sort_by`, `sort_ascending`
+- `messages-get` — Get full message by ID. Params: `message_id` (required)
+- `contacts-list` — List contacts. Params: `limit` (int). **Not functional** — token scoped to mail only
+- `events-list` — List calendar events. Params: `limit`, `calendar_name`. **Not functional** — token scoped to mail only
+
+## Commands (in commands/messages.py, not yet wired as MCP tools)
+- `mailboxes-list` — List mailbox folders with unread/total counts
+- `messages-send` — Placeholder, not implemented (needs JMAP `Email/submit`)
+
 ## What Works
-- Mail read operations: list, search, get message details
+- All three `messages-*` tools work against live Fastmail JMAP
 - Token-based auth (bearer token via FASTMAIL_TOKEN)
-- Contacts/calendars exist in code but token is scoped to mail only — not needed
 
 ## What Doesn't Work Yet
 - `messages-send` is a placeholder (TODO in code)
